@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Republic;
+use App\User;
 
 class RepublicController extends Controller
 {
@@ -46,7 +47,7 @@ class RepublicController extends Controller
     		$republic->price = $request->price;
     	}
     	$republic->save();
-    	return reponse()->json([$republic]);
+    	return response()->json([$republic]);
     }
 
     public function deleteRepublic($id){

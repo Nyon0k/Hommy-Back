@@ -13,6 +13,9 @@ class UserController extends Controller
     	$user->email = $request->email;
     	$user->password = $request->password;
     	$user->phone = $request->phone;
+        $user->verify = $request->verify;
+        $user->save();
+        return response()->json($user);
     }
 
     public function showUser($id){
@@ -43,7 +46,7 @@ class UserController extends Controller
     		$user->verify = $request->verify;
     	}
     	$user->save();
-    	return reponse()->json([$user]);
+    	return response()->json([$user]);
     }
 
     public function deleteUser($id){
@@ -55,6 +58,6 @@ class UserController extends Controller
     	$user = User::findOrFail($id);
  		$user->verify = 1;
  		$user->save();
- 		return response()->json(['Usuário virou ANUNCIANTE'])
+ 		return response()->json(['Usuário virou ANUNCIANTE']);
  	}
 }
