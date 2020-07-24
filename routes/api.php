@@ -19,11 +19,15 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::POST('createUser', 'User@createUser');
+Route::GET('showUser/{id}', 'UserController@showUser');
+Route::GET('listUser', 'UserController@listUser');
+Route::PUT('updateUser/{id}', 'UserController@updateRepublic');
+Route::DELETE('deleteUser/{id}', 'UserController@deleteRepublic');
 
 Route::POST('createRepublic', 'RepublicController@createRepublic');
 Route::GET('showRepublic/{id}', 'RepublicController@showRepublic');
 Route::GET('listRepublic', 'RepublicController@listRepublic');
-Route::PUT('updateRepublic', 'RepublicController@updateRepublic');
+Route::PUT('updateRepublic/{id}', 'RepublicController@updateRepublic');
 Route::DELETE('deleteRepublic/{id}', 'RepublicController@deleteRepublic');
-Route::PUT('addRepublic/{id}', 'RepublicController@addRepublic');
-Route::PUT('removeRepublic/{id}', 'RepublicController@removeRepublic');
+Route::PUT('addRepublic/{userId}/{republicId}', 'RepublicController@addRepublic');
+Route::PUT('removeRepublic/{userId}/{republicId}', 'RepublicController@removeRepublic');

@@ -9,12 +9,12 @@ class RepublicController extends Controller
 {
     public function createRepublic(Request $request){
     	$republic = new Republic;
-    	$republic -> name = $request -> name;
-    	$republic -> adress = $request -> adress;
-    	$republic -> freeBedrooms = $request -> freeBedrooms;
-    	$republic -> telephone = $request ->	telephone;
-    	$republic -> price = $request -> price;
-    	$republic -> save();
+    	$republic->name = $request->name;
+    	$republic->adress = $request->adress;
+    	$republic->freeBedrooms = $request->freeBedrooms;
+    	$republic->phone = $request->phone;
+    	$republic->price = $request->price;
+    	$republic->save();
     	return response()->json($republic);
     }
 
@@ -30,22 +30,22 @@ class RepublicController extends Controller
 
     public function updateRepublic(Request $request, $id){
     	$republic = Republic::findOrFail($id);
-    	if($request -> name){
-    		$republic -> name = $request -> name;
+    	if($request->name){
+    		$republic->name = $request->name;
     	}
-    	if($request -> adress){
-    		$republic -> adress = $request -> adress;
+    	if($request->adress){
+    		$republic->adress = $request->adress;
     	}
-    	if($request -> freeBedrooms){
-    		$republic -> freeBedrooms = $request -> freeBedrooms;
+    	if($request->freeBedrooms){
+    		$republic->freeBedrooms = $request->freeBedrooms;
     	}
-    	if($request -> telephone){
-    		$republic -> telephone = $request -> telephone;
+    	if($request->phone){
+    		$republic->phone = $request->phone;
     	}
-    	if($request -> price){
-    		$republic -> price = $request -> price;
+    	if($request->price){
+    		$republic->price = $request->price;
     	}
-    	$republic -> save();
+    	$republic->save();
     	return reponse()->json([$republic]);
     }
 

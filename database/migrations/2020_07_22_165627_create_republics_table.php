@@ -18,10 +18,10 @@ class CreateRepublicsTable extends Migration
             $table->string('name')->unique();
             $table->string('adress');
             $table->integer('freeBedrooms')->unsigned();
-            $table->string('telephone');
+            $table->string('phone');
             $table->float('price');
             $table->timestamps();
-            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('user_id')->nullable();
         });
 
         Schema::table('republics', function(Blueprint $table) {
