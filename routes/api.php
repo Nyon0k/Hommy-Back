@@ -18,7 +18,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::POST('createUser', 'User@createUser');
+Route::POST('createUser', 'UserController@createUser');
 Route::GET('showUser/{id}', 'UserController@showUser');
 Route::GET('listUser', 'UserController@listUser');
 Route::PUT('updateUser/{id}', 'UserController@updateRepublic');
