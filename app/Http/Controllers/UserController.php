@@ -4,17 +4,15 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\User;
+use Illuminate\Support\Facades\Validator;
+use App\Http\Requests\UserRequest;
+use App\Republic;
 
 class UserController extends Controller
 {
-    public function createUser(Request $request){
+    public function createUser(UserRequest $request){
     	$user = new User;
-    	$user->name = $request->name;
-    	$user->email = $request->email;
-    	$user->password = $request->password;
-    	$user->phone = $request->phone;
-        $user->verify = $request->verify;
-        $user->save();
+    	$user->createUser($request);
         return response()->json($user);
     }
 
@@ -28,24 +26,9 @@ class UserController extends Controller
     	return response()->json([$user]);
     }
 
-    public function updateUser(Request $request, $id){
+    public function updateUser(UserRequest $request, $id){
     	$user = User::findOrFail($id);
-    	if($request->name){
-    		$user->name = $request->name;
-    	}
-    	if($request->email){
-    		$user->email = $request->email;
-    	}
-    	if($request->password){
-    		$user->password = $request->password;
-    	}
-    	if($request->phone){
-    		$user->phone = $request->phone;
-    	}
-    	if($request->verify){
-    		$user->verify = $request->verify;
-    	}
-    	$user->save();
+    	$user->updateUser($request);
     	return response()->json([$user]);
     }
 
@@ -60,4 +43,35 @@ class UserController extends Controller
  		$user->save();
  		return response()->json(['Usuário virou ANUNCIANTE']);
  	}
+
+    public function alugar($user_id, $republic_id){
+        $user = User::findOrFail($user_id);
+        $user->alugar($republic_id);
+        return response()->json($user);
+    }
+
+    public function removeAluguel($republic_id, $user_id){
+        $republic = Republic::findOrFail($republic_id);
+        $user = User::findOrFail($user_id);
+        $user->removeAluguel();
+        $republic->removeUsuario();
+        return response()->json([$user, $republic]);
+    }
+
+    public function favoritarRep($user_id, $republic_id){
+        $user = User::findOrFail($user_id);
+        $user->repFavoritadaUser()->attach($republic_id);
+        return response()->json(["S2"]);
+    }
+
+    public function desfavoritarRep($user_id, $republic_id){
+        $user = User::findOrFail($user_id);
+        $user->repFavoritadaUser()->detach($republic_id);
+        return response()->json(["S/2"]);
+    }
+
+    public function listFavRep($id){
+        $user = User::findOrFail($id);
+        return response()->json($user->repFavoritadaUser);
+    }
 }

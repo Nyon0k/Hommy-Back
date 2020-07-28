@@ -5,11 +5,14 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Republic;
 use App\User;
+use Illuminate\Support\Facades\Validator;
+use App\Http\Requests\RepublicFormRequest;
 
 class RepublicController extends Controller
 {
-    public function createRepublic(Request $request){
+    public function createRepublic(RepublicFormRequest $request){
     	$republic = new Republic;
+        $republic->user_id = $request->user_id;
     	$republic->name = $request->name;
     	$republic->adress = $request->adress;
     	$republic->freeBedrooms = $request->freeBedrooms;
@@ -29,7 +32,7 @@ class RepublicController extends Controller
     	return response()->json([$republic]);
     }
 
-    public function updateRepublic(Request $request, $id){
+    public function updateRepublic(RepublicFormRequest $request, $id){
     	$republic = Republic::findOrFail($id);
     	if($request->name){
     		$republic->name = $request->name;
@@ -69,5 +72,17 @@ class RepublicController extends Controller
     	$republic->user_id = Null;
     	$republic->save();
     	return response()->json($republic);
+    }
+
+    public function locatarios($id){
+        $republic = Republic::findOrFail($id);
+        $locatarios = $republic->userLocatario->get();
+        return response()->json($locatarios);
+    }
+
+    public function mostrarProprietario($id){
+        $republic = Republic::findOrFail($id);
+        $user = User::findOrFail($republic->user_id);
+        return response()->json($user);
     }
 }
