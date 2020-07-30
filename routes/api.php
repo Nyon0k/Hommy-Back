@@ -38,3 +38,11 @@ Route::PUT('addRepublic/{user_id}/{republic_id}', 'RepublicController@addRepubli
 Route::PUT('removeRepublic/{user-id}/{republic_id}', 'RepublicController@removeRepublic');
 Route::GET('locatarios/{id}', 'RepublicController@locatarios');
 Route::GET('mostrarProprietario/{id}', 'RepublicController@mostrarProprietario');
+
+//Passport Routes
+Route::post('register', 'API\PassportController@register');
+Route::post('login', 'API\PassportController@login');
+Route::group(['middleware' => 'auth:api'], function() {
+	Route::post('logout', 'API\PassportController@logout');
+	Route::post('getDetails', 'API\PassportController@getDetails');
+});

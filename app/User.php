@@ -5,17 +5,19 @@ namespace App;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Laravel\Passport\HasApiTokens;
 use App\Republic;
 use App\Http\Requests\UserRequest;
 
 class User extends Authenticatable
 {
     use Notifiable;
+    use HasApiTokens;
 
     public function createUser(UserRequest $request){
         $this->name = $request->name;
         $this->email = $request->email;
-        $this->password =$request->password;
+        $this->password = bcrypt($request->password);
         $this->phone = $request->phone;
         $this->verify = $request->verify;
         $this->cpf = $request->cpf;
