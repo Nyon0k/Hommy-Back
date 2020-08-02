@@ -29,7 +29,7 @@ class RepublicController extends Controller
 
     public function listRepublic(){
     	$republic = Republic::all();
-    	return response()->json([$republic]);
+    	return response()->json($republic);
     }
 
     public function updateRepublic(RepublicFormRequest $request, $id){
@@ -53,9 +53,19 @@ class RepublicController extends Controller
     	return response()->json([$republic]);
     }
 
+    public function searchRepublic(Request $request) { 
+        $queryRepublic = Republic::query(); // Gera um objeto do tipo Builder
+        if ($request->name)
+            $queryRepublic->where('name','LIKE', '%'.$request->name.'%');
+        if ($request->freeBedrooms)
+            $queryRepublic->where(freeBedrooms);
+        $search = $queryRepublic->get();
+        return response()->json($search);
+    }
+
     public function deleteRepublic($id){
     	Republic::destroy($id);
-    	return response()->json(['Produto deletado']);
+    	return response()->json(['Republica deletada']);
     }
 
     public function addRepublic($id, $republic_id){
@@ -85,4 +95,22 @@ class RepublicController extends Controller
         $user = User::findOrFail($republic->user_id);
         return response()->json($user);
     }
+
+    public function republicasDeletadas(){
+        $republic = Republic::onlyTrashed()->get();
+        return response()->json($republic);
+    }
+
+    public function restoreOneRepublic($id){
+        $republic = Republic::onlyTrashed()->findOrFail($id);
+        $republic->restore();
+        return response()->json($republic);
+    }
+
+    public function restoreRepublics(){
+        $republic1 = Republic::onlyTrashed()->get();
+        $republic2 = Republic::onlyTrashed()->restore();
+        return response()->json($republic1);
+    }
+
 }

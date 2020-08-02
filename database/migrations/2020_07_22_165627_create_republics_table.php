@@ -27,6 +27,11 @@ class CreateRepublicsTable extends Migration
         Schema::table('republics', function(Blueprint $table) {
             $table->foreign('user_id')->references('id')->on('users')->onDelete('set null');
         });
+
+        Schema::table('republics', function (Blueprint $table) {
+            $table->softDeletes();
+        });
+
     }
 
     /**

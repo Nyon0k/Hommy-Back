@@ -4,9 +4,12 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use App\User;
+Use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Republic extends Model
 {
+    use SoftDeletes;
+
 	public function removeUsuario(){
 		$this->user_id = NULL;
 		$this->save();

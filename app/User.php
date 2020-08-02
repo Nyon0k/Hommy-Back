@@ -8,11 +8,13 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Passport\HasApiTokens;
 use App\Republic;
 use App\Http\Requests\UserRequest;
+Use Illuminate\Database\Eloquent\SoftDeletes;
 
 class User extends Authenticatable
 {
     use Notifiable;
     use HasApiTokens;
+    use SoftDeletes;
 
     public function createUser(UserRequest $request){
         $this->name = $request->name;
