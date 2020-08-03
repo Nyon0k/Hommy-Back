@@ -34,7 +34,6 @@ Route::GET('showRepublic/{id}', 'RepublicController@showRepublic');
 Route::GET('listRepublic', 'RepublicController@listRepublic');
 Route::PUT('updateRepublic/{id}', 'RepublicController@updateRepublic');
 Route::POST('searchRepublic','RepublicController@searchRepublic');
-Route::DELETE('deleteRepublic/{id}', 'RepublicController@deleteRepublic');
 Route::PUT('addRepublic/{user_id}/{republic_id}', 'RepublicController@addRepublic');
 Route::PUT('removeRepublic/{user-id}/{republic_id}', 'RepublicController@removeRepublic');
 Route::GET('locatarios/{id}', 'RepublicController@locatarios');
@@ -48,6 +47,7 @@ Route::POST('countUserRepublics', 'RepublicController@countUserRepublics');
 Route::post('register', 'API\PassportController@register');
 Route::post('login', 'API\PassportController@login');
 Route::group(['middleware' => 'auth:api'], function() {
+	Route::DELETE('deleteRepublic/{id}', 'RepublicController@deleteRepublic')->middleware('DeleteRepublic');
 	Route::post('logout', 'API\PassportController@logout');
 	Route::post('getDetails', 'API\PassportController@getDetails');
 });

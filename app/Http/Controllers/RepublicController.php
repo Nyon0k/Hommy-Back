@@ -8,6 +8,7 @@ use App\User;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Requests\RepublicFormRequest;
 use App\Http\Resources\Republics as RepublicsResource;
+use Illuminate\Support\Facades\Storage;
 
 class RepublicController extends Controller
 {
@@ -19,7 +20,15 @@ class RepublicController extends Controller
     	$republic->adress = $request->adress;
     	$republic->freeBedrooms = $request->freeBedrooms;
     	$republic->phone = $request->phone;
-    	$republic->price = $request->price;
+        $republic->price = $request->price;
+        if (!Storage::exists('localPhotos/'))
+            Storage::makeDirectory('localPhotos/',0775,true);
+
+        $image=base64_decode($request->photo);
+        $filename=uniqid();
+        $path=storage_path('/app/localPhotos/' . $filename);
+        file_put_contents($path,$image);
+        $republic->photo=$path;
     	$republic->save();
     	return response()->json($republic);
     }

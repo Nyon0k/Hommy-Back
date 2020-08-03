@@ -20,6 +20,7 @@ class CreateRepublicsTable extends Migration
             $table->integer('freeBedrooms')->unsigned();
             $table->string('phone');
             $table->float('price');
+            $table->string('photo')->nullable();
             $table->timestamps();
             $table->unsignedBigInteger('user_id')->nullable();
         });
