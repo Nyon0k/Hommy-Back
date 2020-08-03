@@ -7,9 +7,11 @@ use App\Republic;
 use App\User;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Requests\RepublicFormRequest;
+use App\Http\Resources\Republics as RepublicsResource;
 
 class RepublicController extends Controller
 {
+
     public function createRepublic(RepublicFormRequest $request){
     	$republic = new Republic;
         $republic->user_id = $request->user_id;
@@ -28,7 +30,7 @@ class RepublicController extends Controller
     }
 
     public function listRepublic(){
-    	$republic = Republic::all();
+    	$republic = Republic::paginate(4);
     	return response()->json($republic);
     }
 
@@ -59,8 +61,10 @@ class RepublicController extends Controller
             $queryRepublic->where('name','LIKE', '%'.$request->name.'%');
         if ($request->freeBedrooms)
             $queryRepublic->where(freeBedrooms);
-        $search = $queryRepublic->get();
-        return response()->json($search);
+        $paginator = $queryRepublic->paginate(4);
+        $search = RepublicsResource::collection($paginator);
+        $last = $paginator->lastPage();
+        return response()->json([$search, $last]);
     }
 
     public function deleteRepublic($id){
@@ -111,6 +115,12 @@ class RepublicController extends Controller
         $republic1 = Republic::onlyTrashed()->get();
         $republic2 = Republic::onlyTrashed()->restore();
         return response()->json($republic1);
+    }
+
+    public function countUserRepublics(Request $request) {
+        $id = $request->id;
+        $user = Republic::with('users')->where('user_id',$id)->count();
+        return response()->json($user);
     }
 
 }

@@ -42,6 +42,7 @@ Route::GET('mostrarProprietario/{id}', 'RepublicController@mostrarProprietario')
 Route::PUT('republicasDeletadas', 'RepublicController@republicasDeletadas');
 Route::PUT('restoreOneRepublic/{id}', 'RepublicController@restoreOneRepublic');
 Route::PUT('restoreRepublics', 'RepublicController@restoreRepublics');
+Route::POST('countUserRepublics', 'RepublicController@countUserRepublics');
 
 //Passport Routes
 Route::post('register', 'API\PassportController@register');
